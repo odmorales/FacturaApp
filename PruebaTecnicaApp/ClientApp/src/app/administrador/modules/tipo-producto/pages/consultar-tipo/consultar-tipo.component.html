@@ -1,0 +1,86 @@
+<mat-card>
+    <mat-card-title>
+        <div fxLayout="row" 
+             fxLayoutAlign="space-between center">
+            <div fxFlex="50">
+                <span>Categorias</span>
+            </div>
+
+            <div fxFlex="50" fxLayoutAlign="end">
+                <div fxLayout="row" fxLayoutGap="15px" fxLayoutGap.xs="10px">
+                    <button mat-raised-button
+                            color="primary"
+                            (click)="registrar()">
+                            Registrar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </mat-card-title>
+
+    <hr>
+    <br>
+
+    <ng-container *ngIf="!categorias || categorias.length === 0; else datos">
+        <app-spinner [lista]="categorias"></app-spinner>
+    </ng-container>
+
+    <ng-template #datos>
+        <p-table [value]="categorias" 
+                 #dt
+                 [paginator]="true" 
+                 [rows]="10" 
+                 [showCurrentPageReport]="true" 
+                 responsiveLayout="scroll"
+                 currentPageReportTemplate="Viendo de {first} a {last} de {totalRecords} Categorias" 
+                 [rowsPerPageOptions]="[10,25,50]"
+                 [globalFilterFields]="['nombre']">
+            <ng-template pTemplate="caption">
+                <div fxLayout="row" 
+                     fxLayoutAlign="space-between center">
+                     <div fxFlex="90">
+                         <app-input-filtro [dt]="dt"></app-input-filtro>
+                     </div>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Id</th>
+                    <th>Nombre</th>  
+                    <th>Descripccion</th>       
+                    <th>Accion</th>
+                </tr>
+            </ng-template>
+
+            <ng-template pTemplate="body" let-categoria>
+                <tr>
+                    <td>{{ categoria.id }}</td>
+                    <td>{{ categoria.nombre}}</td>
+                    <td>{{ categoria.descripcion }}</td>
+
+                    <td>
+                        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                            <mat-icon>more_vert</mat-icon>
+                          </button>
+                          <mat-menu #menu="matMenu">
+                            <button mat-menu-item
+                                    [routerLink]="['/user/categoria/editar-tipo',categoria.id]">
+                              <mat-icon>edit</mat-icon>
+                              <span>Modificar</span>
+                            </button>
+                            <button mat-menu-item
+                                    (click)="eliminar( categoria )">
+                              <mat-icon>delete</mat-icon>
+                              <span>Eliminar</span>
+                            </button>
+                          </mat-menu>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </ng-template>
+
+</mat-card>
+
+
+

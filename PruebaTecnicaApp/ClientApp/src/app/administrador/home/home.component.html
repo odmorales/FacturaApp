@@ -1,0 +1,73 @@
+<mat-sidenav-container fullscreen>
+    <mat-sidenav #sidenav="matSidenav" color="primary">
+        <mat-toolbar class="toolbar-sidenav">
+            <span>Factura App</span>
+
+            <span class="spacer"></span>
+
+            <button mat-icon-button (click)="sidenav.toggle()">
+                <mat-icon class="material-icons md-18">close</mat-icon>
+            </button>
+        </mat-toolbar>
+
+        <div class="mt-5">
+            <mat-selection-list [multiple]="false" (click)="cerrarSidenav()">
+                <mat-list-option class="texto-blanco" routerLink="cliente" routerLinkActive="active"
+                    [routerLinkActiveOptions]="{ exact: true }">
+                    <mat-icon fontSet="material-icons-outlined" matListIcon>person</mat-icon>
+                    <p matLine>Cliente</p>
+                </mat-list-option>
+
+                <mat-list-option class="texto-blanco" routerLink="categoria" routerLinkActive="active ">
+                    <mat-icon fontSet="material-icons-outlined " matListIcon>category</mat-icon>
+                    <p matLine>Categoria</p>
+                </mat-list-option>
+
+                <mat-list-option class="texto-blanco" routerLink="producto" routerLinkActive="active ">
+                    <mat-icon fontSet="material-icons-outlined " matListIcon>shopping_cart</mat-icon>
+                    <p matLine>Producto</p>
+                </mat-list-option>
+
+                <mat-list-option class="texto-blanco" routerLink="factura" routerLinkActive="active ">
+                    <mat-icon fontSet="material-icons-outlined " matListIcon>savings</mat-icon>
+                    <p matLine>Factura</p>
+                </mat-list-option>
+
+            </mat-selection-list>
+        </div>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+
+<mat-toolbar class="mat-elevation-z8">
+    <button *ngIf="!sidenav.opened" mat-icon-button (click)="sidenav.toggle()">
+        <mat-icon>menu</mat-icon>
+    </button>
+
+    <span class="spacer"></span>
+
+    <div fxLayout="row"
+        fxLayoutGap="10px"
+        fxLayoutAlign="center center">
+        <h3>{{ usuario?.usuNombre | titlecase}}</h3>
+        <mat-icon>admin_panel_settings</mat-icon>
+        <div fxLayout="row"
+        fxLayoutGap="40px">
+
+        <div fxFlex>
+            <button mat-icon-button
+                (click)="logout()">
+                <mat-icon>logout</mat-icon>
+            </button>
+        </div>
+    </div>
+    </div>
+</mat-toolbar>
+
+        <div fxLayout="row" fxLayoutAlign="center">
+            <div fxFlex="95" [style.margin]="'30px 0'">
+                <router-outlet></router-outlet>
+            </div>
+        </div>
+    </mat-sidenav-content>
+</mat-sidenav-container>

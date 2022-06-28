@@ -1,0 +1,25 @@
+<mat-toolbar class="mat-elevation-z8">
+    <span>DigitalWare</span>
+    <span class="spacer"></span>
+    <div fxLayout="row"
+         fxLayoutGap="10px"
+         fxLayoutAlign="center center">
+
+            <div fxFlex
+                fxLayoutAlign="center center"
+                fxLayoutGap="10px">
+                <span>User</span>
+                <mat-icon>security</mat-icon>
+            </div>
+
+    </div>
+
+</mat-toolbar>
+
+<div fxLayout="row" 
+    fxLayoutAlign="center">
+    <div fxFlex="95"
+    [style.margin]="'50px 0'">
+        <router-outlet></router-outlet>
+    </div>
+</div>

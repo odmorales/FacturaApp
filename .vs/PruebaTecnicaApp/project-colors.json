@@ -1,0 +1,36 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "39c9df0d-257d-4851-ac1a-e7f92f1324d8": {
+      "ProjectGuid": "39c9df0d-257d-4851-ac1a-e7f92f1324d8",
+      "DisplayName": "PruebaTecnicaApp",
+      "ColorIndex": 0
+    },
+    "7926b8f1-d5b4-42ec-bd94-74f242c262dd": {
+      "ProjectGuid": "7926b8f1-d5b4-42ec-bd94-74f242c262dd",
+      "DisplayName": "Logica",
+      "ColorIndex": 1
+    },
+    "ad40f5b6-80e3-4ee5-aab3-6b9be61d2016": {
+      "ProjectGuid": "ad40f5b6-80e3-4ee5-aab3-6b9be61d2016",
+      "DisplayName": "Logica",
+      "ColorIndex": 2
+    },
+    "93375691-287b-456f-85d5-0a1a174ad88d": {
+      "ProjectGuid": "93375691-287b-456f-85d5-0a1a174ad88d",
+      "DisplayName": "Entidad",
+      "ColorIndex": 3
+    },
+    "8862df06-b48e-4378-8fc0-3c3ae2f2256c": {
+      "ProjectGuid": "8862df06-b48e-4378-8fc0-3c3ae2f2256c",
+      "DisplayName": "Datos",
+      "ColorIndex": 4
+    },
+    "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3": {
+      "ProjectGuid": "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3",
+      "DisplayName": "Archivos varios",
+      "ColorIndex": -1
+    }
+  },
+  "NextColorIndex": 5
+}

@@ -1,0 +1,113 @@
+<mat-card class="mat-elevation-z4">
+    <mat-card-title>
+        <div fxLayout="row" fxLayoutAlign="space-between center">
+            <div fxFlex="50">
+                <span>{{ ( cliente.id ) ? 'Editar' : 'Registrar' }} cliente</span>
+            </div>
+
+            <div fxFlex="50" fxLayoutAlign="end">
+                <div fxLayout="row" fxLayoutGap="15px" fxLayoutGap.xs="10px">
+                    <button mat-raised-button 
+                            color="primary"
+                            (click)="consultar()">
+                        Consultar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </mat-card-title>
+    <hr>
+    <br>
+
+    <mat-card-content>
+        <form autocomplete="off"
+              (submit)="guardar()"
+              [formGroup]="miFormulario">
+
+            <div fxLayout="column">
+                <div fxLayout="row"
+                     fxLayoutGap="20px"
+                     fxLayout.lt-sm="column"
+                     fxLayoutGap.lt-sm="0">
+
+                    <mat-form-field appearance="outline"
+                                    fxFlex="100">
+                        <mat-label>Nombres</mat-label>
+                        <input matInput
+                            type="text"
+                            placeholder="Nombres"
+                            formControlName="nombre"
+                            [errorStateMatcher]="validarService.matcher">
+                        <mat-error 
+                        *ngIf="validarService.campoEsValido('nombre')">
+                        {{validarService.getMensaje('nombre')}}
+                        </mat-error>
+
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline"
+                                    fxFlex="100">
+                        <mat-label>Apellidos</mat-label>
+                        <input matInput
+                            type="text"
+                            placeholder="Apellidos"
+                            formControlName="apellido"
+                            [errorStateMatcher]="validarService.matcher">
+                        <mat-error 
+                        *ngIf="validarService.campoEsValido('apellido')">
+                        {{validarService.getMensaje('apellido')}}
+                        </mat-error>
+
+                    </mat-form-field>
+
+                </div>
+
+                <div fxLayout="row"
+                     fxLayoutGap="20px"
+                     fxLayout.lt-sm="column"
+                     fxLayoutGap.lt-sm="0">
+
+                    <mat-form-field appearance="outline"
+                                    fxFlex="100">
+                        <mat-label>Direccion</mat-label>
+                        <input matInput
+                            type="text"
+                            placeholder="Direccion"
+                            formControlName="direccion"
+                            [errorStateMatcher]="validarService.matcher">
+                        <mat-error 
+                        *ngIf="validarService.campoEsValido('direccion')">
+                        {{validarService.getMensaje('direccion')}}
+                        </mat-error>
+
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline"
+                                    fxFlex="100">
+                        <mat-label>Edad</mat-label>
+                        <input matInput
+                            type="number"
+                            placeholder="Edad"
+                            formControlName="edad"
+                            [errorStateMatcher]="validarService.matcher">
+                        <mat-error 
+                        *ngIf="validarService.campoEsValido('edad')">
+                        {{validarService.getMensaje('edad')}}
+                        </mat-error>
+
+                    </mat-form-field>
+
+                </div>
+            </div>
+
+            <div fxLayoutAlign="end center">
+                <button type="submit"
+                        mat-raised-button
+                        color="primary">
+                    <mat-icon>save_as</mat-icon>
+                    {{ ( cliente.id ) ? 'Editar' : 'Guardar' }}
+                </button>
+            </div>
+        </form>
+    </mat-card-content>
+</mat-card>

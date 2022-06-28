@@ -1,0 +1,84 @@
+<mat-card>
+    <mat-card-title>
+        <div fxLayout="row" 
+             fxLayoutAlign="space-between center">
+            <div fxFlex="50">
+                <span>Facturas</span>
+            </div>
+
+            <div fxFlex="50" fxLayoutAlign="end">
+                <div fxLayout="row" fxLayoutGap="15px" fxLayoutGap.xs="10px">
+                    <button mat-raised-button
+                            color="primary"
+                            (click)="registrar()">
+                            Registrar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </mat-card-title>
+
+    <hr>
+    <br>
+
+    <ng-container *ngIf="!facturas || facturas.length === 0; else datos">
+        <app-spinner [lista]="facturas"></app-spinner>
+    </ng-container>
+
+    <ng-template #datos>
+        <p-table [value]="facturas" 
+                 #dt
+                 [paginator]="true" 
+                 [rows]="10" 
+                 [showCurrentPageReport]="true" 
+                 responsiveLayout="scroll"
+                 currentPageReportTemplate="Viendo de {first} a {last} de {totalRecords} Facturas" 
+                 [rowsPerPageOptions]="[10,25,50]"
+                 [globalFilterFields]="['cliente.nombre', 'cliente.apellido']">
+            <ng-template pTemplate="caption">
+                <div fxLayout="row" 
+                     fxLayoutAlign="space-between center">
+                     <div fxFlex="90">
+                         <app-input-filtro [dt]="dt"></app-input-filtro>
+                     </div>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Id</th>
+                    <th>Nombre</th>  
+                    <th>Apellido</th>       
+                    <th>Fecha</th>
+                    <th>Total</th>
+                    <th>Accion</th>
+                </tr>
+            </ng-template>
+
+            <ng-template pTemplate="body" let-factura>
+                <tr>
+                    <td>{{ factura.id }}</td>
+                    <td>{{ factura.cliente.nombre}}</td>
+                    <td>{{ factura.cliente.apellido }}</td>
+                    <td>{{ factura.fechaCompra | date: "EEE, dd 'de' MMMM 'de' yyyy" }}</td>
+                    <td>{{ factura.total | currency:'CAD':'symbol-narrow':'1.0-4' }}</td>
+                    <td>
+                        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                            <mat-icon>more_vert</mat-icon>
+                          </button>
+                          <mat-menu #menu="matMenu">
+                            <button mat-menu-item
+                                    [routerLink]="['/user/factura/consultar-detalles',factura.id]">
+                              <mat-icon>receipt_long</mat-icon>
+                              <span>Ver detalles</span>
+                            </button>
+
+                          </mat-menu>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </ng-template>
+
+</mat-card>
+
+

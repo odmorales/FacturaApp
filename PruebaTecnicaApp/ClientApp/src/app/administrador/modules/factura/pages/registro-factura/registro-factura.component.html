@@ -1,0 +1,116 @@
+<mat-card class="mat-elevation-z4">
+    <mat-card-title>
+        <div fxLayout="row" fxLayoutAlign="space-between center">
+            <div fxFlex="50">
+                <span>Registrar factura</span>
+            </div>
+
+            <div fxFlex="50" fxLayoutAlign="end">
+                <div fxLayout="row" fxLayoutGap="15px" fxLayoutGap.xs="10px">
+                    <button mat-raised-button color="primary" (click)="consultar()">
+                        Consultar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </mat-card-title>
+    <hr>
+    <br>
+
+    <mat-card-content>
+        <form autocomplete="off" [formGroup]="miFormulario">
+
+            <div fxLayout="column">
+                <div fxLayout="row" fxLayoutGap="20px" fxLayout.lt-sm="column" fxLayoutGap.lt-sm="0">
+
+                    <mat-form-field appearance="outline" fxFlex="100">
+                        <mat-label>Cliente</mat-label>
+                        <input matInput type="text"
+                               placeholder="Cliente" 
+                               formControlName="idCliente"
+                               [matAutocomplete]="auto"
+                               [errorStateMatcher]="validarService.matcher">
+                            <mat-autocomplete #auto="matAutocomplete"
+                               (optionSelected)="opcionSeleccionada( $event, 'idCliente' )">
+                               <mat-option *ngFor="let cliente of filteredClientes | async" [value]="cliente">
+                                   {{ cliente.nombre | titlecase }}
+                               </mat-option>
+                               <mat-option *ngIf="lista.length === 0" [value]="">
+                                   No hay opciones.
+                               </mat-option>
+                           </mat-autocomplete> 
+                        <mat-error *ngIf="validarService.campoEsValido('idCliente')">
+                            {{validarService.getMensaje('idCliente')}}
+                        </mat-error>
+
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" fxFlex="100">
+                        <mat-label>Fecha</mat-label>
+                        <input matInput [matDatepicker]="picker" formControlName="fechaCompra">
+                        <mat-hint>MM/DD/YYYY</mat-hint>
+                        <mat-datepicker-toggle matSuffix [for]="picker">
+                          <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+                        </mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+
+
+                </div>
+
+                <div formArrayName="detalles">
+                    <div fxLayout="row" fxLayoutGap="20px" fxLayout.lt-sm="column" fxLayoutGap.lt-sm="0"
+                        *ngFor="let detalle of detallesArr.controls; let i = index" [formGroupName]="i">
+
+                        <mat-form-field appearance="outline" 
+                                        fxFlex="100">
+                            <mat-label>Producto</mat-label>
+                            <input matInput 
+                                   type="number" 
+                                   placeholder="Producto"
+                                   formControlName="idProducto">
+
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" fxFlex="100">
+                            <mat-label>Cantidad</mat-label>
+                            <input matInput 
+                                   type="number" 
+                                   placeholder="Cantidad"
+                                   formControlName="cantidad">
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" fxFlex="100">
+                            <mat-label>Valor</mat-label>
+                            <input matInput 
+                                   type="number" 
+                                   placeholder="Valor"
+                                   formControlName="valor">
+                        </mat-form-field>
+
+                        <div fxFlex>
+                            <button mat-mini-fab (click)="addDetalles()">
+                                <mat-icon>add</mat-icon>
+                            </button>
+                        </div>
+                        
+                        <div fxFlex>
+                            <button mat-mini-fab color="warn" (click)="removeDetalles(i)">
+                                <mat-icon>remove</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div fxLayoutAlign="end center">
+                <button mat-raised-button 
+                        color="primary"
+                        (click)="guardar()">
+                    <mat-icon>save_as</mat-icon>
+                    Guardar
+                </button>
+            </div>
+        </form>
+    </mat-card-content>
+</mat-card>
