@@ -57,6 +57,34 @@
 
 
                 </div>
+                
+                <div class="row" 
+                fxLayoutGap="20px"
+                fxLayoutGap.lt-sm="0">
+                    <mat-form-field appearance="outline" 
+                                    fxFlex="100">
+                                <mat-label>Producto</mat-label>
+                                <input matInput 
+                                       type="text" 
+                                       placeholder="Producto"
+                                       [formControl]="idProducto"
+                                       [errorStateMatcher]="validarService.matcher"
+                                       [matAutocomplete]="auto2">
+                    </mat-form-field>
+                    <mat-autocomplete #auto2="matAutocomplete"
+                                      (optionSelected)="productoSeleccionado($event)">
+                        <mat-option *ngFor="let producto of productos" [value]="producto">
+                            {{producto.nombre}}
+                        </mat-option>
+                    </mat-autocomplete>
+                    <div fxFlex>
+                        <button mat-mini-fab (click)="addDetalles()">
+                            <mat-icon>add</mat-icon>
+                        </button>
+                    </div>
+
+                </div>
+
 
                 <div formArrayName="detalles">
                     <div fxLayout="row" fxLayoutGap="20px" fxLayout.lt-sm="column" fxLayoutGap.lt-sm="0"
@@ -64,10 +92,11 @@
 
                         <mat-form-field appearance="outline" 
                                         fxFlex="100">
-                            <mat-label>Producto</mat-label>
+                            <mat-label>Nombre</mat-label>
                             <input matInput 
-                                   type="number" 
-                                   placeholder="Producto"
+                                   type="text" 
+                                   placeholder="Nombre"
+                                   [errorStateMatcher]="validarService.matcher"
                                    formControlName="idProducto">
 
                         </mat-form-field>
@@ -77,6 +106,7 @@
                             <input matInput 
                                    type="number" 
                                    placeholder="Cantidad"
+                                   [errorStateMatcher]="validarService.matcher"
                                    formControlName="cantidad">
                         </mat-form-field>
 
@@ -85,14 +115,9 @@
                             <input matInput 
                                    type="number" 
                                    placeholder="Valor"
+                                   [errorStateMatcher]="validarService.matcher"
                                    formControlName="valor">
                         </mat-form-field>
-
-                        <div fxFlex>
-                            <button mat-mini-fab (click)="addDetalles()">
-                                <mat-icon>add</mat-icon>
-                            </button>
-                        </div>
                         
                         <div fxFlex>
                             <button mat-mini-fab color="warn" (click)="removeDetalles(i)">

@@ -15,6 +15,7 @@ import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { Producto } from '../../../producto/class/producto';
 import { ProductoService } from '../../../producto/services/producto.service';
 
+
 @Component({
   selector: 'app-registro-factura',
   templateUrl: './registro-factura.component.html',
@@ -24,7 +25,6 @@ import { ProductoService } from '../../../producto/services/producto.service';
 export class RegistroFacturaComponent implements OnInit {
 
   factura?: Factura;
-  detallesFacura: DetalleFactura[] = [];
 
   filteredClientes?: Observable<Cliente[]>;
   clientes: Cliente[] = [];
@@ -32,6 +32,7 @@ export class RegistroFacturaComponent implements OnInit {
   dato: any;
 
   producto?: Producto;
+  productos: Producto[] = [];
 
   miFormulario: FormGroup = this.fb.group({
     idCliente: ['', Validators.required],
@@ -39,24 +40,14 @@ export class RegistroFacturaComponent implements OnInit {
     detalles: this.fb.array([], Validators.required)
   });
 
+  idProducto: FormControl = this.fb.control('', Validators.required );
+
   detalles: FormGroup = this.fb.group({
     idProducto: [''],
     cantidad: [''],
     valor: ['']
   });
   
-  get detallesArr(): FormArray {
-    return this.miFormulario.get('detalles') as FormArray;
-  }
-
-  addDetalles(){
-    this.detallesArr.push(this.detalles);
-  }
-
-  removeDetalles(index: number){
-    this.detallesArr.removeAt(index);
-  }
-
   constructor(private fb: FormBuilder,
     private facturaService: FacturaService,
     public validarService: ValidarService,
@@ -77,15 +68,42 @@ export class RegistroFacturaComponent implements OnInit {
   }
 
   opcionSeleccionada(event: MatAutocompleteSelectedEvent, tipo: string) {
-
     this.dato = event.option.value;
-
     this.autoCompleteService.opcionSeleccionada( this.dato, tipo );
+  }
+
+  productoSeleccionado(event: MatAutocompleteSelectedEvent){
+    if(!event.option.value) {
+      this.idProducto.reset();
+    }else{
+      this.producto = event.option.value
+      this.idProducto.reset(this.producto?.id);
+    }
   }
 
   ngOnInit(): void {
     this.init();
-    this.addDetalles();
+    this.productoService.get().subscribe( productos => this.productos = productos );
+  }
+
+  get detallesArr(): FormArray {
+    return this.miFormulario.get('detalles') as FormArray;
+  }
+
+  addDetalles(){
+    if(!this.producto){
+      return;
+    }
+    this.detallesArr.push(new FormGroup({
+      'idProducto': new FormControl(this.producto!.id, Validators.required),
+      'cantidad': new FormControl(1, Validators.required),
+      'valor': new FormControl(this.producto!.valor, Validators.required)
+    }));
+    this.idProducto.reset();
+  }
+
+  removeDetalles(index: number){
+    this.detallesArr.removeAt(index);
   }
 
   init(){
